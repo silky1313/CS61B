@@ -1,7 +1,10 @@
 package timingtest;
 
-/** An SLList is a list of integers, which hides the terrible truth
- * of the nakedness within. */
+/**
+ * An SLList is a list of integers, which hides the terrible truth
+ * of the nakedness within.
+ * 头节点是空的
+ * */
 public class SLList<Item> {
 	private class IntNode {
 		public Item item;
