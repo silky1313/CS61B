@@ -1,6 +1,8 @@
 package IntList;
 
 import static org.junit.Assert.*;
+
+import com.sun.tools.jconsole.JConsoleContext;
 import org.junit.Test;
 
 public class SetToZeroIfMaxFELTest {
@@ -9,6 +11,7 @@ public class SetToZeroIfMaxFELTest {
     public void testZeroOutFELMaxes1() {
         IntList L = IntList.of(1, 22, 15);
         IntListExercises.setToZeroIfMaxFEL(L);
+        System.out.println(L);
         assertEquals("0 -> 0 -> 15", L.toString());
     }
 

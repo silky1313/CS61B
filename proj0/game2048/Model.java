@@ -1,5 +1,6 @@
 package game2048;
 
+import javax.swing.*;
 import java.util.Formatter;
 import java.util.Observable;
 
@@ -113,12 +114,47 @@ public class Model extends Observable {
         // TODO: Modify this.board (and perhaps this.score) to account
         // for the tilt to the Side SIDE. If the board changed, set the
         // changed local variable to true.
+        // 大概就是确定每一个块最后移动的位置，然后调用move函数
+        // 然后如果move函数返回true就产生了合并 合并就需要加分数
+        board.setViewingPerspective(side);
 
+        Integer length = this.board.size();
+        for(int i = 0; i < length; i++) { // column
+            //每一个块都是判断可不可以向上移动
+            if (signalColumnMoveUp(i)) {
+                changed = true;
+            }
+        }
+        board.setViewingPerspective(Side.NORTH);
         checkGameOver();
         if (changed) {
             setChanged();
         }
         return changed;
+    }
+
+    public boolean signalColumnMoveUp(int column){
+        boolean result = false;
+
+        Integer length = this.board.size();
+        //小于maxRow都是可以发生合并的
+        Integer maxRow = length - 1;
+        for(int i = length - 2; i >= 0; i--){
+            for(int j = maxRow; j > i; j--){
+                Tile tile = this.board.tile(column, j);
+                Tile now = this.board.tile(column, i);
+                if(now == null) continue;
+                if(tile == null || tile.value() == now.value()){
+                    boolean scoreChanged = this.board.move(column, j, now);
+                    result = true;
+                    if(scoreChanged){
+                        score += now.value() * 2;
+                        maxRow = j - 1;
+                    }
+                }
+            }
+        }
+        return result;
     }
 
     /** Checks if the game is over and sets the gameOver variable
@@ -138,6 +174,12 @@ public class Model extends Observable {
      * */
     public static boolean emptySpaceExists(Board b) {
         // TODO: Fill in this function.
+        Integer length =  b.size();
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                if(b.tile(i, j) == null) return true;
+            }
+        }
         return false;
     }
 
@@ -148,6 +190,14 @@ public class Model extends Observable {
      */
     public static boolean maxTileExists(Board b) {
         // TODO: Fill in this function.
+        Integer length =  b.size();
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                Tile tile = b.tile(i, j);
+                if (tile == null) continue;
+                if(b.tile(i, j).value() == MAX_PIECE) return true;
+            }
+        }
         return false;
     }
 
@@ -159,6 +209,23 @@ public class Model extends Observable {
      */
     public static boolean atLeastOneMoveExists(Board b) {
         // TODO: Fill in this function.
+        Integer length =  b.size();
+        int [] dx = new int[]{1, -1, 0, 0};
+        int [] dy = new int[]{0, 0, 1, -1};
+        for(int i = 0; i < length; i++){
+            for(int j = 0; j < length; j++){
+                Tile now = b.tile(i, j);
+                if(now == null) return true;
+                for(int k = 0; k < 4; k++){
+                    int ni = dx[k] + i;
+                    int nj = dy[k] + j;
+                    if(ni < 0 || nj < 0 || ni == length || nj == length) continue;
+                    Tile neighbor = b.tile(ni, nj);
+                    if(neighbor == null) return true;
+                    if(now.value() == neighbor.value()) return true;
+                }
+            }
+        }
         return false;
     }
 
