@@ -1,7 +1,5 @@
 package deque;
 
-import net.sf.saxon.expr.sort.ItemWithMergeKeys;
-import net.sf.saxon.om.NoElementsSpaceStrippingRule;
 
 /**
  * 采用的是循环方式实现的链表
