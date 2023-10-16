@@ -106,7 +106,7 @@ public class ArrayDeque<T> {
     }
 
     public boolean isEmpty(){
-        return size > 0;
+        return size == 0;
     }
 
 
