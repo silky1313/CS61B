@@ -31,32 +31,25 @@ public class ArrayDequeTest {
     public void testRandom(){
         ArrayDeque<Integer> test = new ArrayDeque<>();
         java.util.ArrayDeque<Integer> answer = new java.util.ArrayDeque<>();
-        for(int i = 0; i < 10; i++){
-            Random r = new Random();
-            int choose = r.nextInt(2);
+        Random r = new Random();
+        int loop = r.nextInt(10000);
+        for(int i = 0; i < loop; i++){
+            int choose = r.nextInt(4);
             int value = r.nextInt();
-            if(choose == 0){
+            if(choose == 0) {
                 test.addFirst(value);
                 answer.addFirst(value);
-            }
-            if(choose == 1){
+            } else if(choose == 1){
                 test.addLast(value);
                 answer.addLast(value);
+            } else if(choose == 2 && answer.size() > 0){
+                test.removeFirst();
+                answer.removeFirst();
+            } else if(choose == 3 && answer.size() > 0){
+                test.removeLast();
+                answer.removeLast();
             }
         }
         assertEquals(test.toString(), answer.toString());
-    }
-
-    @Test
-    public void testremove(){
-        ArrayDeque<Integer> test = new ArrayDeque<>();
-        for(int i = 0; i < 5; i++){
-            test.addFirst(i);
-        }
-        System.out.println(test);
-        for(int i = 0; i < 5; i++){
-           int t = test.removeLast();
-           System.out.println(t);
-        }
     }
 }

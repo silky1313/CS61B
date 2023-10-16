@@ -10,7 +10,7 @@ import java.util.Arrays;
  * 尾指针指向队列尾
  * 动态拓展数组大小，使用率小于二十五时，数组大小减半
  */
-public class ArrayDeque<T> {
+public class ArrayDeque<T> implements Deque<T> {
     private T[] array;
     private int size;
     private int lengthArray;
@@ -56,6 +56,12 @@ public class ArrayDeque<T> {
         return result.toString();
     }
 
+    @Override
+    public void printDeque(){
+        System.out.println(this.toString());
+    }
+
+    @Override
     public void addFirst(T value){
         if(size == lengthArray){
             changeLengthArray(lengthArray * 2);
@@ -65,6 +71,7 @@ public class ArrayDeque<T> {
         size++;
     }
 
+    @Override
     public void addLast(T value){
         if(size == lengthArray){
             changeLengthArray(lengthArray * 2);
@@ -74,6 +81,7 @@ public class ArrayDeque<T> {
         size++;
     }
 
+    @Override
     public T removeFirst(){
         if(size <= 0) return null;
         head = (head + 1) % lengthArray;
@@ -85,6 +93,7 @@ public class ArrayDeque<T> {
         return result;
     }
 
+    @Override
     public T removeLast(){
         if(size <= 0) return null;
         tail = (tail - 1 + lengthArray) % lengthArray;
@@ -96,18 +105,14 @@ public class ArrayDeque<T> {
         return result;
     }
 
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public T get(int index){
         int pos = (index + 1 + head) % lengthArray;
         return array[pos];
     }
-
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
-
 }

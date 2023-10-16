@@ -5,12 +5,12 @@ package deque;
  * 采用的是循环方式实现的链表
  * 含有removeLast所以必须双指针
  */
-public class LinkedListDeque<Item> {
+public class LinkedListDeque<T>  implements Deque<T>{
     private class Node{
-        Item value;
+        T value;
         Node prev;
         Node next;
-        public Node(Item value){
+        public Node(T value){
             this.value = value;
         }
     }
@@ -23,7 +23,8 @@ public class LinkedListDeque<Item> {
         sentinel.prev = sentinel;  // 哨兵节点的prev指向自身
     }
 
-    public void addFirst(Item value){
+    @Override
+    public void addFirst(T value){
         Node addNode = new Node(value);
 
         addNode.prev = sentinel;
@@ -33,7 +34,8 @@ public class LinkedListDeque<Item> {
         size++;
     }
 
-    public void addLast(Item value){
+    @Override
+    public void addLast(T value){
         Node addNode = new Node(value);
         Node lastNode = sentinel.prev;
         lastNode.next = addNode;
@@ -45,14 +47,12 @@ public class LinkedListDeque<Item> {
         size++;
     }
 
-    public boolean isEmpty(){
-        return size == 0;
-    }
-
+    @Override
     public int size(){
         return size;
     }
 
+    @Override
     public void printDeque(){
         if(isEmpty()){
             return;
@@ -65,7 +65,7 @@ public class LinkedListDeque<Item> {
         System.out.println(temporaryNode.value);
     }
 
-    public Item printDeque(int index){
+    public T printDeque(int index){
         if(index > size){
             return null;
         }
@@ -81,8 +81,8 @@ public class LinkedListDeque<Item> {
         return temporaryNode.value;
     }
 
-
-    public Item removeFirst(){
+    @Override
+    public T removeFirst(){
         if(size == 0) return null;
         Node firstNode = sentinel.next;
         Node secondNode = firstNode.next;
@@ -99,7 +99,8 @@ public class LinkedListDeque<Item> {
         return firstNode.value;
     }
 
-    public Item removeLast(){
+    @Override
+    public T removeLast(){
         if(size == 0) return null;
         Node lastNode = sentinel.prev;
         Node secondLastNode = lastNode.prev;
@@ -113,7 +114,8 @@ public class LinkedListDeque<Item> {
         return lastNode.value;
     }
 
-    public Item get(int index){
+    @Override
+    public T get(int index){
       return printDeque(index);
     }
 }
