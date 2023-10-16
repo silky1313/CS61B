@@ -135,24 +135,40 @@ public class Model extends Observable {
 
     public boolean signalColumnMoveUp(int column){
         boolean result = false;
-
         Integer length = this.board.size();
         //小于maxRow都是可以发生合并的
         Integer maxRow = length - 1;
+
         for(int i = length - 2; i >= 0; i--){
-            for(int j = maxRow; j > i; j--){
+            Integer changeRow = -1;
+            Tile now = this.board.tile(column, i);
+            if(now == null) continue;
+
+            /**找到能交换位置的一个点,如果为空就可以继续向上找*/
+            for(int j = i + 1; j <= maxRow; j++){
                 Tile tile = this.board.tile(column, j);
-                Tile now = this.board.tile(column, i);
-                if(now == null) continue;
-                if(tile == null || tile.value() == now.value()){
-                    boolean scoreChanged = this.board.move(column, j, now);
-                    result = true;
-                    if(scoreChanged){
-                        score += now.value() * 2;
-                        maxRow = j - 1;
-                    }
+                if(tile == null){
+                    changeRow = j;
+                    continue;
+                }
+                else if(tile.value() == now.value()){
+                    changeRow = j;
+                    break;
+                }
+                else{
+                    break;
                 }
             }
+            if(changeRow != -1){
+                result = true;
+                boolean scoreChanged = this.board.move(column, changeRow, now);
+                if(scoreChanged){
+                    score += now.value() * 2;
+                    maxRow = changeRow - 1;
+                }
+            }
+
+
         }
         return result;
     }

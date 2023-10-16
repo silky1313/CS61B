@@ -20,6 +20,27 @@ public class TestModel extends TestUtils {
      * The following tests determine the correctness of your `tilt`
      * method.
      */
+    @Test
+    public void intervalTest() {
+        int[][] before = new int[][]{
+                {2, 0, 0, 0},
+                {4, 0, 0, 0},
+                {2, 0, 0, 0},
+                {0, 0, 0, 0},
+        };
+        int[][] after = new int[][]{
+                {2, 0, 0, 0},
+                {4, 0, 0, 0},
+                {2, 0, 0, 0},
+                {0, 0, 0, 0},
+        };
+
+        updateModel(before, 0, 0, false);
+        String prevBoard = model.toString();
+        boolean changed = model.tilt(Side.NORTH);
+        checkChanged(Side.NORTH, false, changed);
+        checkModel(after, 0, 0, prevBoard, Side.NORTH);
+    }
 
     @Test
     /** Checks right two pieces merge when 3 adjacent pieces have same value. */
