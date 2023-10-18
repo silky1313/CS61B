@@ -1,11 +1,14 @@
 package deque;
 
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * 采用的是循环方式实现的链表
  * 含有removeLast所以必须双指针
  */
-public class LinkedListDeque<T>  implements Deque<T>{
+public class LinkedListDeque<T>  implements Deque<T>, Iterator<T> {
     private class Node{
         T value;
         Node prev;
@@ -117,5 +120,52 @@ public class LinkedListDeque<T>  implements Deque<T>{
     @Override
     public T get(int index){
       return printDeque(index);
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Deque){
+            Deque deque = (Deque) o;
+            int length = this.size();
+            if(deque.size() != length) return false;
+            for(int i = 0; i < length; i++){
+                if(deque.get(i) != this.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private int currentPosition;
+    @Override
+    public boolean hasNext() {
+        return currentPosition < size;
+    }
+
+    @Override
+    public T next() {
+        if(!hasNext()){
+            throw new NoSuchElementException();
+        }
+        T element = this.get(currentPosition);
+        currentPosition++;
+        return element;
+    }
+
+    public Iterator<T> iterator() {
+        currentPosition = 0; // 初始化迭代位置
+        return this;
+    }
+
+    public T getRecursive(int index){
+        if(index >= size || index < 0) return null;
+        return find(sentinel, index);
+    }
+
+    public T find(Node head, int index){
+        if(index == -1) return head.value;
+        return find(head.next, index - 1);
     }
 }

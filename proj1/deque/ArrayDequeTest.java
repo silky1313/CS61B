@@ -3,6 +3,7 @@ package deque;
 import org.apache.commons.math3.stat.inference.OneWayAnova;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.Random;
 
 import static org.junit.Assert.assertEquals;
@@ -11,18 +12,11 @@ public class ArrayDequeTest {
 
     @Test
     public void testaddFirst(){
-        ArrayDeque<Integer> test = new ArrayDeque<>();
-        java.util.ArrayDeque<Integer> answer = new java.util.ArrayDeque<>();
+        LinkedListDeque<Integer> test1 = new LinkedListDeque<>();
+        Deque<Integer> test2 = new ArrayDeque<>();
         for(int i = 0; i < 20; i++){
-            test.addFirst(i);
-            answer.addFirst(i);
+            System.out.print(test1.getRecursive(i) + " ");
         }
-        for(int i = 0; i < 20; i++){
-            test.removeFirst();
-            answer.removeLast();
-        }
-        System.out.println(test);
-        System.out.println(answer);
     }
 
     @Test

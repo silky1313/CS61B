@@ -3,6 +3,8 @@ package deque;
 
 import java.lang.reflect.TypeVariable;
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 /**
  * 循环数组
@@ -10,7 +12,7 @@ import java.util.Arrays;
  * 尾指针指向队列尾
  * 动态拓展数组大小，使用率小于二十五时，数组大小减半
  */
-public class ArrayDeque<T> implements Deque<T> {
+public class ArrayDeque<T> implements Deque<T>, Iterator<T> {
     private T[] array;
     private int size;
     private int lengthArray;
@@ -115,5 +117,42 @@ public class ArrayDeque<T> implements Deque<T> {
         if(index >= size) return null;
         int pos = (index + 1 + head) % lengthArray;
         return array[pos];
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(o instanceof Deque){
+            Deque deque = (Deque) o;
+            int length = this.size();
+            if(deque.size() != length) return false;
+            for(int i = 0; i < length; i++){
+                if(deque.get(i) != this.get(i)){
+                    return false;
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    private int currentPosition;
+    @Override
+    public boolean hasNext() {
+        return currentPosition < size;
+    }
+
+    @Override
+    public T next() {
+        if(!hasNext()){
+            throw new NoSuchElementException();
+        }
+        T element = this.get(currentPosition);
+        currentPosition++;
+        return element;
+    }
+
+    public Iterator<T> iterator() {
+        currentPosition = 0; // 初始化迭代位置
+        return this;
     }
 }
