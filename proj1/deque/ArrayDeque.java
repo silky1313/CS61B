@@ -3,7 +3,8 @@ package deque;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import  java.lang.Iterable;
+import java.lang.Iterable;
+import java.util.Iterator;
 
 /**
  * 循环数组
@@ -70,7 +71,9 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public T removeFirst() {
-        if (size <= 0) return null;
+        if (size <= 0) {
+            return null;
+        }
         head = (head + 1) % lengthArray;
         size--;
         T result = array[head];
@@ -106,23 +109,31 @@ public class ArrayDeque<T> implements Deque<T>, Iterable<T> {
 
     @Override
     public boolean equals(Object o) {
-        if (o instanceof Deque) {
-            Deque deque = (Deque) o;
-            int length = this.size();
-            if (deque.size() != length) return false;
-            for (int i = 0; i < length; i++) {
-                if (deque.get(i) != this.get(i)) {
-                    return false;
-                }
-            }
+        if (o == null) {
+            return false;
+        }
+        if (o == this) {
             return true;
         }
-        return false;
+        if (!(o instanceof ArrayDeque)) {
+            return false;
+        }
+        ArrayDeque<?> lld = (ArrayDeque<?>) o;
+        if (lld.size() != size) {
+            return false;
+        }
+        for (int i = 0; i < size; i++) {
+            if (lld.get(i) != get(i)) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public Iterator<T> iterator() {
         return new Iterable();
     }
+
     private class Iterable implements Iterator<T> {
         private int wizPos;
 

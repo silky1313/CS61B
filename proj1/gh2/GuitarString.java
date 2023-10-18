@@ -1,6 +1,7 @@
 package gh2;
 
 // TODO: uncomment the following import once you're ready to start this portion
+
 import deque.Deque;
 // TODO: maybe more imports
 import deque.ArrayDeque;
@@ -9,9 +10,11 @@ import java.util.Random;
 
 //Note: This file will not compile until you complete the Deque implementations
 public class GuitarString {
-    /** Constants. Do not change. In case you're curious, the keyword final
+    /**
+     * Constants. Do not change. In case you're curious, the keyword final
      * means the values cannot be changed at runtime. We'll discuss this and
-     * other topics in lecture on Friday. */
+     * other topics in lecture on Friday.
+     */
     private static final int SR = 44100;      // Sampling Rate
     private static final double DECAY = .996; // energy decay factor
 
@@ -28,7 +31,7 @@ public class GuitarString {
         //       Your should initially fill your buffer array with zeros.
         buffer = new ArrayDeque<>();
         int capacity = (int) Math.round((SR / frequency));
-        for(int i = 0; i < capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             buffer.addFirst(0.0);
         }
     }
@@ -45,10 +48,10 @@ public class GuitarString {
         //       are different from each other. It means you should repeatedly call
         //       Math.random() - 0.5 to generate new random numbers for each array index.
         int capacity = buffer.size();
-        for(int i = 0; i < capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             buffer.removeFirst();
         }
-        for(int i = 0; i < capacity; i++){
+        for (int i = 0; i < capacity; i++) {
             double addValue = Math.random() - 0.5;
             buffer.addFirst(addValue);
         }
@@ -72,4 +75,4 @@ public class GuitarString {
         return buffer.get(0);
     }
 }
-    // TODO: Remove all comments that say TODO when you're done.
+// TODO: Remove all comments that say TODO when you're done.
