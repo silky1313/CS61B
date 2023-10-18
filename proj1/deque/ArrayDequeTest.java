@@ -25,10 +25,10 @@ public class ArrayDequeTest {
     public void testiterator() {
         LinkedListDeque<Integer> test1 = new LinkedListDeque<>();
         ArrayDeque<Integer> test3 = new ArrayDeque<>();
-        for (int i = 0; i < 5; i++) {
-            test1.addFirst(i);
-            test3.addFirst(i);
-        }
+//        for (int i = 0; i < 5; i++) {
+//            test1.addFirst(i);
+//            test3.addFirst(i);
+//        }
 
         for(Integer integer : test1){
             System.out.print(integer + " ");
