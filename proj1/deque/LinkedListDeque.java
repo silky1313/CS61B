@@ -66,7 +66,7 @@ public class LinkedListDeque<T>  implements Deque<T>{
     }
 
     public T printDeque(int index){
-        if(index > size){
+        if(index >= size){
             return null;
         }
         Node temporaryNode = sentinel.next;

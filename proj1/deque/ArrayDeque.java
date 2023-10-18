@@ -112,6 +112,7 @@ public class ArrayDeque<T> implements Deque<T> {
 
     @Override
     public T get(int index){
+        if(index >= size) return null;
         int pos = (index + 1 + head) % lengthArray;
         return array[pos];
     }
