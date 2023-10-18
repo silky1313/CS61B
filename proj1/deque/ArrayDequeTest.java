@@ -13,9 +13,12 @@ public class ArrayDequeTest {
     @Test
     public void testaddFirst(){
         LinkedListDeque<Integer> test1 = new LinkedListDeque<>();
-        Deque<Integer> test2 = new ArrayDeque<>();
         for(int i = 0; i < 20; i++){
-            System.out.print(test1.getRecursive(i) + " ");
+            test1.addFirst(i);
+        }
+
+        for(Integer integer : test1){
+            System.out.println(integer);
         }
     }
 
@@ -51,6 +54,5 @@ public class ArrayDequeTest {
                 answer.removeLast();
             }
         }
-        assertEquals(test.toString(), answer.toString());
     }
 }

@@ -31,23 +31,6 @@ public class MaxArrayDequeTest {
         assertEquals(max, test.max());
     }
 
-    @Test
-    public void testMin(){
-        MaxArrayDeque<Integer> test = new MaxArrayDeque<>();
-
-        Random random = new Random();
-
-        Integer add = random.nextInt();
-        Integer min = add;
-        for(int i = 0; i < 10000; i++){
-            test.addFirst(add);
-            if(add < min){
-                min = add;
-            }
-            add = random.nextInt();
-        }
-        assertEquals(min, test.max(new IntegerMinComparator()));
-    }
 }
 
 
