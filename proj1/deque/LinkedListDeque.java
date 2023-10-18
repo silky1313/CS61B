@@ -2,8 +2,6 @@ package deque;
 
 
 import java.util.Iterator;
-import java.util.NoSuchElementException;
-import java.lang.Iterable;
 
 /**
  * 采用的是循环方式实现的链表

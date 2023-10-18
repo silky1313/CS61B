@@ -1,13 +1,7 @@
 package deque;
 
-import com.google.gson.internal.bind.util.ISO8601Utils;
-import org.apache.commons.math3.stat.inference.OneWayAnova;
 import org.junit.Test;
-
-import java.util.Iterator;
 import java.util.Random;
-
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 public class ArrayDequeTest {

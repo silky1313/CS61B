@@ -3,8 +3,6 @@ package deque;
 
 import java.util.Arrays;
 import java.util.Iterator;
-import java.lang.Iterable;
-import java.util.Iterator;
 
 /**
  * 循环数组
