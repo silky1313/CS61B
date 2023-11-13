@@ -43,14 +43,14 @@ public class CapersRepository {
      * - story -- file containing the current story
      */
     public static void setupPersistence() throws IOException {
-        // TODO 1.先创建story文件
+        // TODO
         File storyFile = join(CWD, CAPERS_FOLDER.getName(), "story");
         if (!storyFile.exists()) {
-            createDir(storyFile);
+            createDir(storyFile.getParentFile());
             createFile(storyFile);
         }
 
-        //TODO 2.创建dogs文件夹
+        //TODO
         File dogFile =
                 join(CWD, CAPERS_FOLDER.getName(), Dog.DOG_FOLDER.getName());
         if (!dogFile.exists()) {
@@ -65,7 +65,7 @@ public class CapersRepository {
      * @param text String of the text to be appended to the story
      */
     public static void writeStory(String text) throws IOException {
-        // TODO: 1.先将text写入
+        // TODO
         String input = text + System.getProperty("line.separator");
         File inputFile = join(CWD, CAPERS_FOLDER.getName(), "story");
         Files.write(Path.of(inputFile.getPath()), input.getBytes(),
@@ -94,9 +94,10 @@ public class CapersRepository {
      */
     public static void celebrateBirthday(String name) throws IOException {
         // TODO
-        //1. 先反序列化得到对象，庆祝生日，再序列化回去
         Dog dog = Dog.fromFile(name);
         dog.haveBirthday();
         writeObject(dog.getDogFile(), dog);
     }
 }
+
+

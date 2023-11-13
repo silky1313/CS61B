@@ -59,7 +59,6 @@ public class Dog implements Serializable { // TODO
      */
     public static Dog fromFile(String name) {
         // TODO (hint: look at the Utils file)
-        // TODO：1.反序列化得到dog
         File dogFile =
                 join(CWD, CAPERS_FOLDER.getName(), Dog.DOG_FOLDER.getName(),
                         name);
@@ -80,7 +79,6 @@ public class Dog implements Serializable { // TODO
      */
     public void saveDog() throws IOException {
         // TODO (hint: don't forget dog names are unique)
-        // TODO: 1.将dog写入文件内,记得序列化
         File dogFile = getDogFile();
 
         if (dogFile.exists()) {

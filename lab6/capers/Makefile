@@ -21,7 +21,6 @@
 STYLEPROG = style61b
 
 JFLAGS = -g -Xlint:unchecked -Xlint:deprecation
-JFLAGS += -encoding UTF-8
 
 CLASSDIR = ../classes
 
@@ -29,6 +28,8 @@ CLASSDIR = ../classes
 PYTHON = python3
 
 RMAKE = "$(MAKE)"
+
+CPATH = "..;$(CLASSPATH);.;$(CLASSPATH)"
 
 # A CLASSPATH value that (seems) to work on both Windows and Unix systems.
 # To Unix, it looks like ..:$(CLASSPATH):JUNK and to Windows like
