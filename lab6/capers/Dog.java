@@ -1,30 +1,49 @@
 package capers;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
+
+import static capers.CapersRepository.CAPERS_FOLDER;
+import static capers.CapersRepository.CWD;
 import static capers.Utils.*;
 
-/** Represents a dog that can be serialized.
+/**
+ * Represents a dog that can be serialized.
+ *
  * @author TODO
-*/
-public class Dog { // TODO
+ */
+public class Dog implements Serializable { // TODO
 
-    /** Folder that dogs live in. */
-    static final File DOG_FOLDER = null; // TODO (hint: look at the `join`
-                                         //      function in Utils)
+    /**
+     * Folder that dogs live in.
+     */
+    static final File DOG_FOLDER = new File("dogs");
+    // TODO (hint: look at the `join`
+    //      function in Utils)
 
-    /** Age of dog. */
+    /**
+     * Age of dog.
+     */
     private int age;
-    /** Breed of dog. */
+    /**
+     * Breed of dog.
+     */
     private String breed;
-    /** Name of dog. */
+    /**
+     * Name of dog.
+     */
     private String name;
 
     /**
      * Creates a dog object with the specified parameters.
-     * @param name Name of dog
+     *
+     * @param name  Name of dog
      * @param breed Breed of dog
-     * @param age Age of dog
+     * @param age   Age of dog
      */
     public Dog(String name, String breed, int age) {
         this.age = age;
@@ -40,7 +59,11 @@ public class Dog { // TODO
      */
     public static Dog fromFile(String name) {
         // TODO (hint: look at the Utils file)
-        return null;
+        // TODO：1.反序列化得到dog
+        File dogFile =
+                join(CWD, CAPERS_FOLDER.getName(), Dog.DOG_FOLDER.getName(),
+                        name);
+        return readObject(dogFile, Dog.class);
     }
 
     /**
@@ -55,15 +78,34 @@ public class Dog { // TODO
     /**
      * Saves a dog to a file for future use.
      */
-    public void saveDog() {
+    public void saveDog() throws IOException {
         // TODO (hint: don't forget dog names are unique)
+        // TODO: 1.将dog写入文件内,记得序列化
+        File dogFile = getDogFile();
+
+        if (dogFile.exists()) {
+            System.out.println("dog is exits");
+            return;
+        }
+        dogFile = createFile(dogFile);
+
+        String text =
+                "Woof! My name is %s and I am a %s! I am %d years old! Woof!";
+        String replacedText =
+                String.format(text, this.name, this.breed, this.age);
+        writeObject(dogFile, this);
+        System.out.println(replacedText);
     }
 
     @Override
     public String toString() {
         return String.format(
-            "Woof! My name is %s and I am a %s! I am %d years old! Woof!",
-            name, breed, age);
+                "Woof! My name is %s and I am a %s! I am %d years old! Woof!",
+                name, breed, age);
     }
 
+    public File getDogFile() {
+        return join(CWD, CAPERS_FOLDER.getName(), Dog.DOG_FOLDER.getName(),
+                this.name);
+    }
 }

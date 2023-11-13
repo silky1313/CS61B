@@ -21,6 +21,7 @@
 STYLEPROG = style61b
 
 JFLAGS = -g -Xlint:unchecked -Xlint:deprecation
+JFLAGS += -encoding UTF-8
 
 CLASSDIR = ../classes
 
