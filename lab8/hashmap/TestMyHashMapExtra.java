@@ -28,7 +28,7 @@ public class TestMyHashMapExtra {
      */
     @Test
     public void testRemoveThreeCases() {
-        MyHashMap<String, String> q = new MyHashMap<>();
+            MyHashMap<String, String> q = new MyHashMap<>();
         q.put("c", "a");
         q.put("b", "a");
         q.put("a", "a");

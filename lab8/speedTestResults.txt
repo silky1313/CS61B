@@ -1,0 +1,143 @@
+ This program inserts random Strings of length L
+ Into different types of maps as <String, Integer> pairs.
+
+What would you like L to be?: silky
+Please enter a positive integer: 100
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 100
+class hashmap.ULLMap: 0.03 sec
+
+Enter # strings to insert into your hashmap.MyHashMap: silky
+Please enter a positive integer: 100
+class hashmap.MyHashMap: 0.01 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 100
+Java's Built-in HashMap: 0.00 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 100000
+--Stack Overflow -- couldn't add 100000 strings of length 100.
+
+Enter # strings to insert into your hashmap.MyHashMap: silky
+Please enter a positive integer: 100000
+class hashmap.MyHashMap: 0.40 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 100000
+Java's Built-in HashMap: 0.18 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into hashmap.ULLMap: y
+Please enter a positive integer: 1000000
+--Stack Overflow -- couldn't add 1000000 strings of length 100.
+
+Enter # strings to insert into your hashmap.MyHashMap: silky
+Please enter a positive integer: 1000000
+class hashmap.MyHashMap: 2.63 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 1000000
+Java's Built-in HashMap: 1.89 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into hashmap.ULLMap:
+Process finished with exit code 130
+
+
+D:\app\JDK\JDK17\bin\java.exe "-javaagent:D:\app\IntelliJ IDEA 2023.2.3\lib\idea_rt.jar=5995:D:\app\IntelliJ IDEA 2023.2.3\bin" -Dfile.encoding=UTF-8 -classpath E:\001-学习资料\012-lab\103-cs61bjava数据结构\lab8\target\classes;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\Jama-1.0.3.jar\1.0.3\Jama-1.0.3.jar-1.0.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\algs4.jar\1.0\algs4.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\checkstyle-5.9-all.jar\5.9\checkstyle-5.9-all.jar-5.9.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\checkstyle-7.4-all.jar\7.4\checkstyle-7.4-all.jar-7.4.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\classmexer.jar\1.0\classmexer.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\commons-math3-3.6.jar\3.6\commons-math3-3.6.jar-3.6.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\gjdb.jar\1.0\gjdb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\gson-2.8.2.jar\2.8.2\gson-2.8.2.jar-2.8.2.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\hamcrest-core-1.3.jar\1.3\hamcrest-core-1.3.jar-1.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-http-9.4.15.v20190215.jar\9.4.15\jetty-http-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-io-9.4.15.v20190215.jar\9.4.15\jetty-io-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-server-9.4.15.v20190215.jar\9.4.15\jetty-server-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-util-9.4.15.v20190215.jar\9.4.15\jetty-util-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jh61b.jar\1.0\jh61b.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\junit-4.12.jar\4.12\junit-4.12.jar-4.12.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\servlet-api.jar\1.0\servlet-api.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\slf4j-api-1.7.26.jar\1.7.26\slf4j-api-1.7.26.jar-1.7.26.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\slf4j-simple-1.7.26.jar\1.7.26\slf4j-simple-1.7.26.jar-1.7.26.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\spark-core-2.3.jar\2.3\spark-core-2.3.jar-2.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\stdlib-package.jar\1.0\stdlib-package.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\stdlib.jar\1.0\stdlib.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\ucb.jar\1.0\ucb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-api-9.4.15.v20190215.jar\9.4.15\websocket-api-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-client-9.4.15.v20190215.jar\9.4.15\websocket-client-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-common-9.4.15.v20190215.jar\9.4.15\websocket-common-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-server-9.4.15.v20190215.jar\9.4.15\websocket-server-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-servlet-9.4.15.v20190215.jar\9.4.15\websocket-servlet-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\xchart-3.5.1.jar\3.5.1\xchart-3.5.1.jar-3.5.1.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHgjdb.jar\1.0\PNHgjdb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHjpt.jar\1.0\PNHjpt.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHtools.jar\1.0\PNHtools.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb-checkstyle.jar\1.0\PNHucb-checkstyle.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb-f2007.jar\1.0\PNHucb-f2007.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb.jar\1.0\PNHucb.jar-1.0.jar speed.InsertInOrderSpeedTest
+
+ This program inserts lexicographically increasing Stringsinto Maps as <String, Integer> pairs.
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 10000
+class hashmap.ULLMap: 0.57 sec
+
+Enter # strings to insert into hashmap.MyHashMap: silky
+Please enter a positive integer: 10000
+class hashmap.MyHashMap: 0.05 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 10000
+Java's Built-in HashMap: 0.01 sec
+
+Would you like to try more timed-tests? (y/n): y
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 100000
+--Stack Overflow -- couldn't add 100000 strings.
+
+Enter # strings to insert into hashmap.MyHashMap: silky
+Please enter a positive integer: 100000
+class hashmap.MyHashMap: 0.17 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 100000
+Java's Built-in HashMap: 0.08 sec
+
+Would you like to try more timed-tests? (y/n): y
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 1000000
+--Stack Overflow -- couldn't add 1000000 strings.
+
+Enter # strings to insert into hashmap.MyHashMap: silky
+Please enter a positive integer: 1000000
+class hashmap.MyHashMap: 1.24 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 1000000
+Java's Built-in HashMap: 0.87 sec
+
+Would you like to try more timed-tests? (y/n): y
+
+Enter # strings to insert into hashmap.ULLMap: silky
+Please enter a positive integer: 10000000
+--Stack Overflow -- couldn't add 10000000 strings.
+
+Enter # strings to insert into hashmap.MyHashMap: silky
+Please enter a positive integer: 10000000
+class hashmap.MyHashMap: 8.97 sec
+
+Enter # strings to insert into Java's HashMap: silky
+Please enter a positive integer: 10000000
+Java's Built-in HashMap: 5.32 sec
+
+Would you like to try more timed-tests? (y/n): n
+
+Process finished with exit code 0
+
+
+D:\app\JDK\JDK17\bin\java.exe "-javaagent:D:\app\IntelliJ IDEA 2023.2.3\lib\idea_rt.jar=6009:D:\app\IntelliJ IDEA 2023.2.3\bin" -Dfile.encoding=UTF-8 -classpath E:\001-学习资料\012-lab\103-cs61bjava数据结构\lab8\target\classes;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\Jama-1.0.3.jar\1.0.3\Jama-1.0.3.jar-1.0.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\algs4.jar\1.0\algs4.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\checkstyle-5.9-all.jar\5.9\checkstyle-5.9-all.jar-5.9.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\checkstyle-7.4-all.jar\7.4\checkstyle-7.4-all.jar-7.4.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\classmexer.jar\1.0\classmexer.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\commons-math3-3.6.jar\3.6\commons-math3-3.6.jar-3.6.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\gjdb.jar\1.0\gjdb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\gson-2.8.2.jar\2.8.2\gson-2.8.2.jar-2.8.2.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\hamcrest-core-1.3.jar\1.3\hamcrest-core-1.3.jar-1.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-http-9.4.15.v20190215.jar\9.4.15\jetty-http-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-io-9.4.15.v20190215.jar\9.4.15\jetty-io-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-server-9.4.15.v20190215.jar\9.4.15\jetty-server-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jetty-util-9.4.15.v20190215.jar\9.4.15\jetty-util-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\jh61b.jar\1.0\jh61b.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\junit-4.12.jar\4.12\junit-4.12.jar-4.12.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\servlet-api.jar\1.0\servlet-api.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\slf4j-api-1.7.26.jar\1.7.26\slf4j-api-1.7.26.jar-1.7.26.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\slf4j-simple-1.7.26.jar\1.7.26\slf4j-simple-1.7.26.jar-1.7.26.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\spark-core-2.3.jar\2.3\spark-core-2.3.jar-2.3.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\stdlib-package.jar\1.0\stdlib-package.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\stdlib.jar\1.0\stdlib.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\ucb.jar\1.0\ucb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-api-9.4.15.v20190215.jar\9.4.15\websocket-api-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-client-9.4.15.v20190215.jar\9.4.15\websocket-client-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-common-9.4.15.v20190215.jar\9.4.15\websocket-common-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-server-9.4.15.v20190215.jar\9.4.15\websocket-server-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\websocket-servlet-9.4.15.v20190215.jar\9.4.15\websocket-servlet-9.4.15.v20190215.jar-9.4.15.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\xchart-3.5.1.jar\3.5.1\xchart-3.5.1.jar-3.5.1.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHgjdb.jar\1.0\PNHgjdb.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHjpt.jar\1.0\PNHjpt.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHtools.jar\1.0\PNHtools.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb-checkstyle.jar\1.0\PNHucb-checkstyle.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb-f2007.jar\1.0\PNHucb-f2007.jar-1.0.jar;E:\001-学习资料\012-lab\103-cs61bjava数据结构\library-sp21\library-sp21\javalib\CS61B\PNHucb.jar\1.0\PNHucb.jar-1.0.jar speed.BucketsSpeedTest
+
+ This program inserts random Strings of length L
+ Into different types of maps as <String, Integer> pairs.
+
+What would you like L to be?: 10
+
+Enter # strings to insert into each map: silky
+Please enter a positive integer: 10000
+class hashmap.MyHashMapALBuckets: 0.04 sec
+class hashmap.MyHashMapLLBuckets: 0.04 sec
+class hashmap.MyHashMapTSBuckets: 0.07 sec
+class hashmap.MyHashMapHSBuckets: 0.02 sec
+class hashmap.MyHashMapPQBuckets: 0.02 sec
+
+Would you like to try more timed-tests? (y/n)y
+
+Enter # strings to insert into each map: silkysilky
+Please enter a positive integer: 1000000
+class hashmap.MyHashMapALBuckets: 1.38 sec
+class hashmap.MyHashMapLLBuckets: 1.35 sec
+class hashmap.MyHashMapTSBuckets: 1.67 sec
+class hashmap.MyHashMapHSBuckets: 2.04 sec
+class hashmap.MyHashMapPQBuckets: 1.61 sec
+
+Would you like to try more timed-tests? (y/n)n
+
+Process finished with exit code 0
