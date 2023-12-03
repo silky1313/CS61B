@@ -10,13 +10,17 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Locale;
 
 
 /** Assorted utilities.
@@ -236,4 +240,17 @@ class Utils {
         System.out.printf(msg, args);
         System.out.println();
     }
+
+    static File createFile(File file) throws IOException {
+        Path path = Path.of(file.getPath());
+        Files.createDirectories(path.getParent());
+        return Files.createFile(path).toFile();
+    }
+
+    static File createDir(File file) throws IOException {
+        Path path = Path.of(file.getPath());
+        return Files.createDirectories(path).toFile();
+    }
+
+
 }
