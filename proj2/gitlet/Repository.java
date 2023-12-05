@@ -3,7 +3,9 @@ package gitlet;
 import java.io.File;
 import java.io.IOException;
 
+import static gitlet.FileUtils.*;
 import static gitlet.RepositoryUtils.*;
+import static gitlet.Stage.*;
 import static gitlet.Utils.*;
 
 // TODO: any imports you need here
@@ -85,7 +87,7 @@ public class Repository {
 
         if (removeStage.getBlobs().containsValue(blob.getId())) {
             removeStage.delete(blob);
-            Stage.saveRemoveStage(removeStage);
+            Stage.saveRemoveStage();
         }
 
         if (!curCommit.getBlobs().containsValue(blob.getId())) {
@@ -94,13 +96,69 @@ public class Repository {
             } else {
                 addStage.delete(blob);
                 addStage.add(blob);
-                Stage.saveAddStage(addStage);
+                saveAddStage();
             }
         } else {
             if(addStage.getBlobs().containsValue(blob.getId())) {
                 addStage.delete(blob);
-                Stage.saveAddStage(addStage);
+                saveAddStage();
             }
         }
+    }
+
+    /**
+     * commit命令就是将父commit中tracker的file继续跟踪，然后再整合stage的tracked file。
+     * 1.我需要先获取add-stage， remove-stage
+     * 2.然后判断是否再父分支的基础上做了修改
+     * 3.然后就是合并问题了。
+     * 4.最后记得给commit加parents
+     * @param message
+     */
+    public static void commit(String message) {
+        if(message.isEmpty()) {
+            exit("Please enter a commit message.");
+        }
+
+        addStage = getAddStage();
+        removeStage = getRemoveStage();
+        curCommit = getCurCommit();
+
+        if (checkNullStage()) {
+            exit("No changes added to the commit.");
+        }
+
+        createNewCommit(message);
+    }
+
+    /*
+    1. 如果文件保存再add区域，直接删除这个blob，同时从add区域删除
+    2. 如果这个文件再curCommit中，需要删除对这个文件的追踪，但是不能删除blob，因为可能这个blob是共享的
+     */
+    public static void rm(String fileName) {
+        addStage = getAddStage();
+        removeStage = getRemoveStage();
+        curCommit = getCurCommit();
+
+        File file = join(CWD, fileName);
+        Blob blob = new Blob(file);
+        if (addStage.getBlobs().containsValue(blob.getId())) {
+            addStage.delete(blob);
+            saveAddStage();
+        } else if (curCommit.getBlobs().containsKey(blob.getPath())) {
+            removeStage.add(blob);
+            deleteFile(blob.getFileName());
+            saveRemoveStage();
+        } else {
+            System.out.println("No reason to remove the file.");
+        }
+    }
+    /*
+    * 1.首先是从下往上
+    * 2.只展示第一个parents，
+    * 3.对于merge，记得展示merge的两个id
+    * */
+    public static void log() {
+        curCommit = getCurCommit();
+        getListLog(curCommit);
     }
 }

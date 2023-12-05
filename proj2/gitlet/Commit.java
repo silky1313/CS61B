@@ -72,6 +72,17 @@ public class Commit implements Serializable {
         this.commitSaveFileName = Utils.join(Repository.OBJECTS, this.id);
     }
 
+    public Commit(String message, Map<String, String>blobs, List<String>parents) {
+        this.currentTime = new Date();
+        this.timeStamp = dateToTimeStamp(currentTime);
+        this.message = message;
+        this.blobs = blobs;
+        this.parents = parents;
+        this.id = generateId();
+        this.commitSaveFileName = Utils.join(Repository.OBJECTS, this.id);
+
+    }
+
     public void save() {
         Utils.writeObject(commitSaveFileName, this);
     }

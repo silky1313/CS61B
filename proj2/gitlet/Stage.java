@@ -28,17 +28,30 @@ public class Stage implements Serializable {
         blobs.put(blob.getPath(), blob.getId());
     }
 
+    /*
+    * 删除blob文件，同时再这个stage中删除
+    * */
     public void delete(Blob blob) {
         File file = blob.getBlobSaveFileName();
         file.delete();
         blobs.remove(blob.getPath());
     }
 
-    public static void saveAddStage(Stage stage) {
-        Utils.writeObject(ADDSTAGE, stage);
+    public static void saveAddStage() {
+        Utils.writeObject(ADDSTAGE, addStage);
     }
 
-    public static void saveRemoveStage(Stage stage) {
-        Utils.writeObject(REMOVESTAGE, stage);
+    public static void saveRemoveStage() {
+        Utils.writeObject(REMOVESTAGE, removeStage);
+    }
+
+    public static void clearAddStage() {
+        addStage = new Stage();
+        saveAddStage();
+    }
+
+    public static void clearRemoveStage() {
+        removeStage = new Stage();
+        saveRemoveStage();
     }
 }

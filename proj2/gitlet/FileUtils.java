@@ -17,4 +17,8 @@ public class FileUtils {
         Path path = Path.of(file.getPath());
         return Files.createDirectories(path).toFile();
     }
+
+    public static void deleteFile(File deleteFile) {
+        deleteFile.deleteOnExit();
+    }
 }

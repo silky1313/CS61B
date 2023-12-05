@@ -30,6 +30,24 @@ public class Main {
                 Repository.add(args[1]);
                 break;
 
+            case "commit":
+                check(args, 2);
+                gitletExits();
+                Repository.commit(args[1]);
+                break;
+
+            case "rm":
+                check(args, 2);
+                gitletExits();
+                Repository.rm(args[1]);
+                break;
+
+            case "log":
+                check(args, 1);
+                gitletExits();
+                Repository.log();
+                break;
+
             default:
                 exit("No command with that name exists.");
         }
