@@ -2,6 +2,7 @@ package gitlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
 import static gitlet.FileUtils.*;
 import static gitlet.RepositoryUtils.*;
@@ -99,7 +100,7 @@ public class Repository {
                 saveAddStage();
             }
         } else {
-            if(addStage.getBlobs().containsValue(blob.getId())) {
+            if (addStage.getBlobs().containsValue(blob.getId())) {
                 addStage.delete(blob);
                 saveAddStage();
             }
@@ -112,10 +113,11 @@ public class Repository {
      * 2.然后判断是否再父分支的基础上做了修改
      * 3.然后就是合并问题了。
      * 4.最后记得给commit加parents
+     *
      * @param message
      */
     public static void commit(String message) {
-        if(message.isEmpty()) {
+        if (message.isEmpty()) {
             exit("Please enter a commit message.");
         }
 
@@ -152,13 +154,26 @@ public class Repository {
             System.out.println("No reason to remove the file.");
         }
     }
+
     /*
-    * 1.首先是从下往上
-    * 2.只展示第一个parents，
-    * 3.对于merge，记得展示merge的两个id
-    * */
+     * 1.首先是从下往上
+     * 2.只展示第一个parents，
+     * 3.对于merge，记得展示merge的两个id
+     * */
     public static void log() {
         curCommit = getCurCommit();
         getListLog(curCommit);
+    }
+
+    public static void globalLog() {
+        List<String> list = plainFilenamesIn(OBJECTS);
+        for (String i : list) {
+            File file = join(OBJECTS, i);
+            try {
+                Commit commit = readObject(file, Commit.class);
+                printCommit(commit);
+            } catch (Exception e) {
+            }
+        }
     }
 }

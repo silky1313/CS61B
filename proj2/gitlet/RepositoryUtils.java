@@ -34,7 +34,7 @@ public class RepositoryUtils {
 
     public static Stage getRemoveStage() {
         if (REMOVESTAGE.length() == 0) {
-           return new Stage();
+            return new Stage();
         }
         return Utils.readObject(REMOVESTAGE, Stage.class);
     }
@@ -64,7 +64,7 @@ public class RepositoryUtils {
         for (String filePath : addStageBlobs.keySet()) {
             newCommitBlobs.put(filePath, addStageBlobs.get(filePath));
         }
-        for(String filePath : removeStageBlobs.keySet()) {
+        for (String filePath : removeStageBlobs.keySet()) {
             newCommitBlobs.remove(filePath);
         }
 
@@ -86,6 +86,17 @@ public class RepositoryUtils {
     }
 
     public static void getListLog(Commit commit) {
+        printCommit(commit);
+
+        if (commit.getParents().isEmpty()) {
+            return;
+        }
+
+        File file = Utils.join(OBJECTS, commit.getParents().get(0));
+        getListLog(readObject(file, Commit.class));
+    }
+
+    public static void printCommit(Commit commit) {
         System.out.println("===");
         System.out.println("commit " + commit.getId());
 
@@ -100,12 +111,5 @@ public class RepositoryUtils {
         System.out.println("Date:" + commit.getTimeStamp());
         System.out.println(commit.getMessage());
         System.out.println();
-
-        if (commit.getParents().isEmpty()) {
-            return;
-        }
-
-        File file = Utils.join(OBJECTS, commit.getParents().get(0));
-        getListLog(readObject(file, Commit.class));
     }
 }

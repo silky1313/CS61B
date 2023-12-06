@@ -1,5 +1,6 @@
 package gitlet.test;
 
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -10,7 +11,6 @@ import java.nio.file.Path;
 import java.util.Comparator;
 import java.util.stream.Stream;
 
-import static gitlet.FileUtils.*;
 import static gitlet.test.TestUtils.*;
 import static org.junit.Assert.assertEquals;
 import static gitlet.Main.*;
@@ -18,9 +18,11 @@ import static gitlet.Repository.*;
 import static gitlet.RepositoryUtils.*;
 import static gitlet.Utils.*;
 
-public class Test1 {
+public class TestSingleBranch {
 
-    public static String[] log = {"log"};
+    private static final String[] LOG = {"log"};
+
+    private static final String[] GLOBALLOG = {"global-log"};
 
     @Before
     public void init() throws IOException {
@@ -84,7 +86,28 @@ public class Test1 {
             assertEquals(message.toString(), curCommit.getMessage());
         }
 
-        main(log);
+        main(LOG);
+    }
+
+    @Test
+    public void testGlobal() throws IOException {
+        StringBuilder content = new StringBuilder();
+        StringBuilder message = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            content.append("a");
+            message.append("test");
+            String[] args2 = {"add", "add.txt"};
+            writeFile(content.toString(), args2[1]);
+            main(args2);
+
+            String[] commitArgs = {"commit", message.toString()};
+            main(commitArgs);
+            curCommit = getCurCommit();
+            assertEquals(message.toString(), curCommit.getMessage());
+        }
+
+        main(GLOBALLOG);
     }
 
 }

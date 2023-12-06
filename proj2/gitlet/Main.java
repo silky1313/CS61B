@@ -18,7 +18,7 @@ public class Main {
             exit("Please enter a command.");
         }
         String firstArg = args[0];
-        switch(firstArg) {
+        switch (firstArg) {
             case "init":
                 check(args, 1);
                 Repository.init();
@@ -48,6 +48,12 @@ public class Main {
                 Repository.log();
                 break;
 
+            case "global-log":
+                check(args, 1);
+                gitletExits();
+                Repository.globalLog();
+                break;
+
             default:
                 exit("No command with that name exists.");
         }
@@ -60,10 +66,8 @@ public class Main {
     }
 
     public static void gitletExits() {
-        if(!Repository.GITLET_DIR.exists()) {
+        if (!Repository.GITLET_DIR.exists()) {
             exit("Not in an initialized Gitlet directory.");
         }
     }
-
-
 }
