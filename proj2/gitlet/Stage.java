@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 import static gitlet.Repository.*;
 
@@ -12,7 +13,7 @@ public class Stage implements Serializable {
     /**
      * filePath ->  blobPath
      */
-    private Map<String, String> blobs = new HashMap<>();
+    private Map<String, String> blobs = new TreeMap<>();
 
     public Map<String, String> getBlobs() {
         return blobs;
@@ -24,7 +25,7 @@ public class Stage implements Serializable {
      */
     public void add(Blob blob) {
         File file = blob.getBlobSaveFileName();
-        Utils.writeObject(file, blob.getBytes());
+        Utils.writeObject(file, blob);
         blobs.put(blob.getPath(), blob.getId());
     }
 

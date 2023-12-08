@@ -4,16 +4,8 @@ import java.io.IOException;
 
 import static gitlet.RepositoryUtils.exit;
 
-/** Driver class for Gitlet, a subset of the Git version-control system.
- *  @author TODO
- */
 public class Main {
-
-    /** Usage: java gitlet.Main ARGS, where ARGS contains
-     *  <COMMAND> <OPERAND1> <OPERAND2> ... 
-     */
     public static void main(String[] args) throws IOException {
-        // TODO: what if args is empty?
         if (args.length == 0) {
             exit("Please enter a command.");
         }
@@ -54,6 +46,39 @@ public class Main {
                 Repository.globalLog();
                 break;
 
+            case "find":
+                check(args, 2);
+                gitletExits();
+                Repository.find(args[1]);
+                break;
+
+            case "status":
+                check(args, 1);
+                gitletExits();
+                Repository.status();
+                break;
+
+            case "checkout":
+                gitletExits();
+                /*checkout -- [file name]*/
+                /*checkout [commit id] -- [file name]*/
+                /*checkout [branch name]*/
+                switch (args.length) {
+                    case 3:
+                        if (!args[1].equals("--")){
+                            exit("Incorrect operands.");
+                        }
+                        Repository.checkOutFileOnCurCommit(args[2]);
+                        break;
+                    case 4:
+                        if (!args[2].equals("--")) {
+                            exit("Incorrect operands.");
+                        }
+                    case 2:
+
+                }
+
+                break;
             default:
                 exit("No command with that name exists.");
         }

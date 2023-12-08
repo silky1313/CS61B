@@ -74,11 +74,16 @@ public class RepositoryUtils {
         //然后就是创建新的commit
         Commit newCommit = new Commit(message, newCommitBlobs, newCommitParents);
         newCommit.save();
-        writeBranchHead("master", newCommit.getId());
+        String nowBranch = getCurBranch();
+        writeBranchHead(nowBranch, newCommit.getId());
 
-        //最后记得清楚缓存区
+        //最后记得清除缓存区
         clearAddStage();
         clearRemoveStage();
+    }
+
+    private static String getCurBranch() {
+        return Utils.readContentsAsString(HEAD);
     }
 
     public static void writeBranchHead(String branch, String id) {
@@ -112,4 +117,78 @@ public class RepositoryUtils {
         System.out.println(commit.getMessage());
         System.out.println();
     }
+
+    public static void searchAllBranch() {
+        String HEADBranch = readContentsAsString(HEAD);
+        System.out.println("=== Branches ===");
+        System.out.println("*" + HEADBranch);
+
+        List<String> branches = getAllBranches();
+        for (String i : branches) {
+            if(i.equals(HEADBranch)) continue;
+            System.out.println(i);
+        }
+
+        System.out.println();
+    }
+
+    public static List<Commit> getAllCommit() {
+        List<String> list = plainFilenamesIn(OBJECTS);
+        List<Commit> result = new ArrayList<>();
+        assert list != null;
+        for (String i : list) {
+            File file = join(OBJECTS, i);
+            try {
+                Commit commit = readObject(file, Commit.class);
+                result.add(commit);
+            } catch (Exception ignored) {
+            }
+        }
+        return result;
+    }
+
+    public static List<String> getAllBranches() {
+        return plainFilenamesIn(HEADS);
+    }
+
+    public static void searchStage() {
+        addStage = getAddStage();
+        removeStage = getRemoveStage();
+
+        System.out.println("=== Staged Files ===");
+        for (String i : addStage.getBlobs().keySet()) {
+            File file = new File(i);
+            System.out.println(file.getName());
+        }
+        System.out.println();
+
+        System.out.println("=== Removed Files ===");
+        for (String i : removeStage.getBlobs().keySet()) {
+            File file = new File(i);
+            System.out.println(file.getName());
+        }
+        System.out.println();
+    }
+
+    /**
+     * TODO:extra point
+     */
+    public static void searchModificationsNotStaged() {
+        System.out.println("=== Modifications Not Staged For Commit ===");
+        System.out.println();
+    }
+
+    /**
+     * TODO:extra point
+     */
+    public static void searchUntracked() {
+        System.out.println("=== Untracked Files ===");
+        System.out.println();
+    }
+
+    public static Blob getBlobByID(String id) {
+        File BLOB_FILE = join(OBJECTS, id);
+        return readObject(BLOB_FILE, Blob.class);
+    }
+
 }

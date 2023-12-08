@@ -8,6 +8,10 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static gitlet.Repository.CWD;
+import static gitlet.RepositoryUtils.getBlobByID;
+import static gitlet.Utils.join;
+
 /** Represents a gitlet commit object.
  *  TODO: It's a good idea to give a description here of what else this Class
  *  does at a high level.
@@ -94,5 +98,12 @@ public class Commit implements Serializable {
     public static String dateToTimeStamp(Date date) {
         DateFormat dateFormat = new SimpleDateFormat("EEE MMM d HH:mm:ss yyyy Z", Locale.US);
         return dateFormat.format(date);
+    }
+
+    public Blob getBlobByFileName(String fileName) {
+        File file = join(CWD, fileName);
+        String path = file.getPath();
+        String blobID = blobs.get(path);
+        return getBlobByID(blobID);
     }
 }

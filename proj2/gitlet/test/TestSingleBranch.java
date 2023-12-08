@@ -24,6 +24,8 @@ public class TestSingleBranch {
 
     private static final String[] GLOBALLOG = {"global-log"};
 
+    private static final String[] STATUS = {"status"};
+
     @Before
     public void init() throws IOException {
         File file = join(CWD, ".gitlet");
@@ -110,4 +112,31 @@ public class TestSingleBranch {
         main(GLOBALLOG);
     }
 
+    @Test
+    public void testFind() throws IOException {
+        StringBuilder content = new StringBuilder();
+        StringBuilder message = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            content.append("a");
+            message.append("test");
+            String[] args2 = {"add", "add.txt"};
+            writeFile(content.toString(), args2[1]);
+            main(args2);
+
+            String[] commitArgs = {"commit", message.toString()};
+            main(commitArgs);
+            curCommit = getCurCommit();
+            assertEquals(message.toString(), curCommit.getMessage());
+
+            String[] findArgs = {"find", message.toString()};
+            main(findArgs);
+        }
+    }
+
+
+    @Test
+    public void testStatus() throws IOException {
+        main(STATUS);
+    }
 }

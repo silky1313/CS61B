@@ -69,6 +69,4 @@ public class Blob implements Serializable {
     public void save() {
         writeObject(blobSaveFileName, this);
     }
-
-
 }

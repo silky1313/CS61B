@@ -1,5 +1,7 @@
 package gitlet;
 
+import jdk.jshell.execution.Util;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -60,8 +62,7 @@ public class Repository {
     /* TODO: fill in the rest of this class. */
     public static void init() throws IOException {
         if (GITLET_DIR.exists()) {
-            System.out.println("A Gitlet version-control system already exists in the current directory.");
-            System.exit(0);
+            exit("A Gitlet version-control system already exists in the current directory.");
         }
 
         FileUtils.createDir(OBJECTS);
@@ -88,14 +89,17 @@ public class Repository {
 
         if (removeStage.getBlobs().containsValue(blob.getId())) {
             removeStage.delete(blob);
-            Stage.saveRemoveStage();
+            saveRemoveStage();
         }
 
         if (!curCommit.getBlobs().containsValue(blob.getId())) {
             if (addStage.getBlobs().containsValue(blob.getId())) {
                 return;
             } else {
-                addStage.delete(blob);
+                blob.save();
+                if (addStage.getBlobs().containsKey(blob.getPath())) {
+                    addStage.delete(blob);
+                }
                 addStage.add(blob);
                 saveAddStage();
             }
@@ -151,7 +155,7 @@ public class Repository {
             deleteFile(blob.getFileName());
             saveRemoveStage();
         } else {
-            System.out.println("No reason to remove the file.");
+            exit("No reason to remove the file.");
         }
     }
 
@@ -166,14 +170,37 @@ public class Repository {
     }
 
     public static void globalLog() {
-        List<String> list = plainFilenamesIn(OBJECTS);
-        for (String i : list) {
-            File file = join(OBJECTS, i);
-            try {
-                Commit commit = readObject(file, Commit.class);
-                printCommit(commit);
-            } catch (Exception e) {
+        List<Commit> commits = getAllCommit();
+        for(Commit i : commits) {
+            printCommit(i);
+        }
+    }
+
+    public static void find(String message) {
+        List<Commit> commits = getAllCommit();
+        for(Commit i : commits) {
+            if (i.getMessage().equals(message)) {
+                System.out.println(i.getId());
             }
+        }
+    }
+
+    public static void status() {
+        searchAllBranch();
+        searchStage();
+        searchModificationsNotStaged();
+        searchUntracked();
+    }
+
+    /*
+     * 该方法需要将cucommit的file放到工作，
+     * 但是不添加到addstage
+     */
+    public static void checkOutFileOnCurCommit(String fileName) {
+        curCommit = getCurCommit();
+        if (curCommit.getBlobs().containsKey(fileName)) {
+            File file = Utils.join(OBJECTS, curCommit.getBlobs().get(fileName));
+            addFileCWD(file, fileName);
         }
     }
 }
