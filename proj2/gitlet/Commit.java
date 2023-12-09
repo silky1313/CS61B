@@ -28,22 +28,22 @@ public class Commit implements Serializable {
      */
 
     /** The message of this Commit. */
-    private String message;
+    private final String message;
 
     /**
-     * filePath ->  blobPath
+     * filePath ->  blobId
      */
     private Map<String, String> blobs = new HashMap<>();
 
-    private List<String> parents;
+    private final List<String> parents;
 
-    private Date currentTime;
+    private final Date currentTime;
 
-    private String id;
+    private final String id;
 
-    private File commitSaveFileName;
+    private final File commitSaveFileName;
 
-    private String timeStamp;
+    private final String timeStamp;
 
     public String getMessage() {
         return message;
@@ -102,8 +102,34 @@ public class Commit implements Serializable {
 
     public Blob getBlobByFileName(String fileName) {
         File file = join(CWD, fileName);
-        String path = file.getPath();
-        String blobID = blobs.get(path);
+        String blobID = blobs.get(file.getPath());
         return getBlobByID(blobID);
+    }
+
+    public List<String> getFileNames() {
+        List<String> fileName = new ArrayList<>();
+        List<Blob> blobList = getBlobList();
+        for (Blob b : blobList) {
+            fileName.add(b.getFileName().getName());
+        }
+        return fileName;
+    }
+
+    private List<Blob> getBlobList() {
+        Blob blob;
+        List<Blob> blobList = new ArrayList<>();
+        for (String id : blobs.values()) {
+            blob = getBlobByID(id);
+            blobList.add(blob);
+        }
+        return blobList;
+    }
+
+    public boolean keyExist(String key) {
+        return blobs.containsKey(key);
+    }
+
+    public boolean valueExist(String value) {
+        return blobs.containsValue(value);
     }
 }

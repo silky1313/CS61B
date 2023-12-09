@@ -4,8 +4,9 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 
-import static gitlet.Repository.*;
+import static gitlet.Utils.join;
 
 public class FileUtils {
 
@@ -24,10 +25,11 @@ public class FileUtils {
         deleteFile.deleteOnExit();
     }
 
-    /*
-    * 将file里面的内容写入CWD下的name内*/
-    public static void addFileCWD(File file, String name) {
-//        File newFile = Utils.join(CWD, name);
-//        Utils.writeContents(newFile, );
+    /*以file作为前缀的所有文件*/
+    public static void deleteFiles(List<String>fileNames, File prefix) {
+        for (String i : fileNames) {
+            File file = join(prefix, i);
+            deleteFile(file);
+        }
     }
 }

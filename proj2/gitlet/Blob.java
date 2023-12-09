@@ -2,27 +2,20 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 
 import static gitlet.Repository.OBJECTS;
-import static gitlet.Utils.*;
-import static gitlet.Utils.writeObject;
 
 public class Blob implements Serializable {
-    /**
-     * hashI
-     */
-    private String id;
+    private final String id;
 
-    /**
-     * content
-     */
-    private byte[] bytes;
+    private final byte[] bytes;
 
-    private File fileName;
+    private final File fileName;
 
-    private String filePath;
+    private final String filePath;
 
-    private File blobSaveFileName;
+    private final File blobSaveFileName;
 
 
     public Blob(File fileName) {
@@ -54,19 +47,29 @@ public class Blob implements Serializable {
     }
 
     private byte[] readFile() {
-        return readContents(fileName);
+        return Utils.readContents(fileName);
     }
 
     private String generateID() {
-        return sha1(filePath, bytes);
+        return Utils.sha1(filePath, bytes);
     }
 
 
     private File generateBlobSaveFileName() {
-        return join(OBJECTS, id);
+        return Utils.join(OBJECTS, id);
     }
 
+    /*
+     * save blob into objects
+     */
     public void save() {
-        writeObject(blobSaveFileName, this);
+        Utils.writeObject(blobSaveFileName, this);
+    }
+
+    /*
+     *  get blob from object then store into cwd;
+     */
+    public void reSave() {
+        Utils.writeContents(getFileName(), new String(bytes, StandardCharsets.UTF_8));
     }
 }

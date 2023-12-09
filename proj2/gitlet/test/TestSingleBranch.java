@@ -139,4 +139,5 @@ public class TestSingleBranch {
     public void testStatus() throws IOException {
         main(STATUS);
     }
+
 }

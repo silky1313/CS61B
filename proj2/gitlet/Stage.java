@@ -11,7 +11,7 @@ import static gitlet.Repository.*;
 public class Stage implements Serializable {
 
     /**
-     * filePath ->  blobPath
+     * filePath ->  blobId
      */
     private Map<String, String> blobs = new TreeMap<>();
 
@@ -54,5 +54,18 @@ public class Stage implements Serializable {
     public static void clearRemoveStage() {
         removeStage = new Stage();
         saveRemoveStage();
+    }
+
+    public static void clearStage() {
+        clearAddStage();
+        clearRemoveStage();
+    }
+
+    public boolean keyExist(String key) {
+        return blobs.containsKey(key);
+    }
+
+    public boolean valueExist(String value) {
+        return blobs.containsValue(value);
     }
 }

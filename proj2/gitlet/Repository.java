@@ -1,7 +1,5 @@
 package gitlet;
 
-import jdk.jshell.execution.Util;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
@@ -58,6 +56,7 @@ public class Repository {
     public static Commit curCommit;
     public static Stage addStage;
     public static Stage removeStage;
+    public static String curBranch;
 
     /* TODO: fill in the rest of this class. */
     public static void init() throws IOException {
@@ -83,28 +82,26 @@ public class Repository {
         }
         Blob blob = new Blob(file);
 
-        removeStage = getRemoveStage();
-        addStage = getAddStage();
-        curCommit = getCurCommit();
+        restoreState();
 
-        if (removeStage.getBlobs().containsValue(blob.getId())) {
+        if (removeStage.valueExist(blob.getId())) {
             removeStage.delete(blob);
             saveRemoveStage();
         }
 
-        if (!curCommit.getBlobs().containsValue(blob.getId())) {
-            if (addStage.getBlobs().containsValue(blob.getId())) {
+        if (!curCommit.valueExist(blob.getId())) {
+            if (addStage.valueExist(blob.getId())) {
                 return;
             } else {
                 blob.save();
-                if (addStage.getBlobs().containsKey(blob.getPath())) {
+                if (addStage.keyExist(blob.getPath())) {
                     addStage.delete(blob);
                 }
                 addStage.add(blob);
                 saveAddStage();
             }
         } else {
-            if (addStage.getBlobs().containsValue(blob.getId())) {
+            if (addStage.valueExist(blob.getId())) {
                 addStage.delete(blob);
                 saveAddStage();
             }
@@ -125,9 +122,7 @@ public class Repository {
             exit("Please enter a commit message.");
         }
 
-        addStage = getAddStage();
-        removeStage = getRemoveStage();
-        curCommit = getCurCommit();
+        restoreState();
 
         if (checkNullStage()) {
             exit("No changes added to the commit.");
@@ -141,16 +136,15 @@ public class Repository {
     2. 如果这个文件再curCommit中，需要删除对这个文件的追踪，但是不能删除blob，因为可能这个blob是共享的
      */
     public static void rm(String fileName) {
-        addStage = getAddStage();
-        removeStage = getRemoveStage();
-        curCommit = getCurCommit();
+        restoreState();
 
         File file = join(CWD, fileName);
         Blob blob = new Blob(file);
-        if (addStage.getBlobs().containsValue(blob.getId())) {
+
+        if (addStage.valueExist(blob.getId())) {
             addStage.delete(blob);
             saveAddStage();
-        } else if (curCommit.getBlobs().containsKey(blob.getPath())) {
+        } else if (curCommit.keyExist(blob.getPath())) {
             removeStage.add(blob);
             deleteFile(blob.getFileName());
             saveRemoveStage();
@@ -193,14 +187,86 @@ public class Repository {
     }
 
     /*
-     * 该方法需要将cucommit的file放到工作，
-     * 但是不添加到addstage
+     * 该方法需要将curCommit的file放到工作区，
+     * 但是不添加到addStage
      */
-    public static void checkOutFileOnCurCommit(String fileName) {
+    public static void checkOutOnCurCommit(String fileName) {
         curCommit = getCurCommit();
-        if (curCommit.getBlobs().containsKey(fileName)) {
-            File file = Utils.join(OBJECTS, curCommit.getBlobs().get(fileName));
-            addFileCWD(file, fileName);
+        checkOut(curCommit, fileName);
+    }
+
+
+    /*将当给定分支名id,将这个commit内的file添加到工作区，同时需要不需要添加到addStage*/
+    public static void CheckOutFromOtherCommit(String commitId, String fileName) {
+        List<Commit> all = getAllCommit();
+        for (Commit i : all) {
+            if (i.getId().equals(commitId)) {
+                checkOut(i, fileName);
+                return;
+            }
         }
+        System.out.println("No commit with that id exists.");
+    }
+
+    /*切换到branchName，同时将head文件内的当前分支设置这个
+    * 同时还需要将当前分支内追踪的文件但是在checkout分支没有追踪的文件删除
+    * 最后清除stage，如果当前分支和checkout分支是用一个就不用清除*/
+    public static void checkOutFromBranch(String branchName) {
+        checkBranchNameExist(branchName);
+        checkBranchIsCurCommit(branchName);
+
+        curCommit = getCurCommit();
+        Commit newCommit = getCommitByBranchName(branchName);
+
+        changeCommit(newCommit);
+        changeBranch(branchName);
+    }
+
+    /*创建一个分支，然后指向当前的commit,但是不会切换到这个分支上*/
+    public static void addNewBranch(String newBranch) {
+        List<String> branches = getAllBranches();
+        if (branches.contains(newBranch)) {
+            exit("A branch with that name already exists.");
+        }
+
+        File file = Utils.join(HEADS, newBranch);
+        curCommit = getCurCommit();
+        writeContents(file, curCommit.getId());
+    }
+
+    public static void restoreState() {
+        removeStage = getRemoveStage();
+        addStage = getAddStage();
+        curCommit = getCurCommit();
+    }
+
+    public static void removeBranch(String branchName) {
+        List<String> branches = getAllBranches();
+        curBranch = getCurBranch();
+
+        if(curBranch.equals(branchName)) {
+            exit("Cannot remove the current branch.");
+        }
+
+        if (branches.contains(branchName)) {
+            File file = Utils.join(HEADS, branchName);
+            Utils.restrictedDelete(file);
+        } else{
+            exit("A branch with that name does not exist.");
+        }
+    }
+    /*和checkout切换到某个分支是差不多的
+    * 1.先判断commitId是否存在
+    * 2.然后切换到该commit，在checkout中已经实现过了
+    * 3.然后将当前branch的commitId设置为这个id*/
+    public static void reset(String commitId) {
+        checkCommitExits(commitId);
+        curCommit = getCurCommit();
+        curBranch = getCurBranch();
+
+        Commit commit = getCommitByCommitId(commitId);
+
+        changeCommit(commit);
+        changeBranchHead(commitId);
     }
 }

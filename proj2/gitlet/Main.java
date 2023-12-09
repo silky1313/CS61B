@@ -68,16 +68,33 @@ public class Main {
                         if (!args[1].equals("--")){
                             exit("Incorrect operands.");
                         }
-                        Repository.checkOutFileOnCurCommit(args[2]);
+                        Repository.checkOutOnCurCommit(args[2]);
                         break;
                     case 4:
                         if (!args[2].equals("--")) {
                             exit("Incorrect operands.");
                         }
+                        Repository.CheckOutFromOtherCommit(args[1], args[3]);
+                        break;
                     case 2:
-
+                        Repository.checkOutFromBranch(args[1]);
+                        break;
                 }
-
+                break;
+            case "branch":
+                check(args, 2);
+                gitletExits();
+                Repository.addNewBranch(args[1]);
+                break;
+            case "rm-branch":
+                check(args, 2);
+                gitletExits();
+                Repository.removeBranch(args[1]);
+                break;
+            case "reset":
+                check(args, 2);
+                gitletExits();
+                Repository.reset(args[1]);
                 break;
             default:
                 exit("No command with that name exists.");
