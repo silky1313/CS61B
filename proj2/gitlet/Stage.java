@@ -30,7 +30,7 @@ public class Stage implements Serializable {
     }
 
     /*
-    * 删除blob文件，同时再这个stage中删除
+    * Delete the blob file and delete it again in the stage
     * */
     public void delete(Blob blob) {
         File file = blob.getBlobSaveFileName();

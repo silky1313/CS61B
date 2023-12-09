@@ -9,8 +9,6 @@ import static gitlet.RepositoryUtils.*;
 import static gitlet.Stage.*;
 import static gitlet.Utils.*;
 
-// TODO: any imports you need here
-
 /**
  * Represents a gitlet repository.
  *  TODO: It's a good idea to give a description here of what else this Class
@@ -109,11 +107,11 @@ public class Repository {
     }
 
     /**
-     * commit命令就是将父commit中tracker的file继续跟踪，然后再整合stage的tracked file。
-     * 1.我需要先获取add-stage， remove-stage
-     * 2.然后判断是否再父分支的基础上做了修改
-     * 3.然后就是合并问题了。
-     * 4.最后记得给commit加parents
+     * The commit command is to continue tracking the file of the tracker in the parent commit, and then integrate the tracked file of the stage.
+     * 1.I need to get add-stage, remove-stage first
+     * 2. Then determine whether the changes have been made on the basis of the parent branch
+     * 3. Then there's the issue of merging.
+     * 4. Finally, remember to add parents to commit
      *
      * @param message
      */
@@ -132,9 +130,9 @@ public class Repository {
     }
 
     /*
-    1. 如果文件保存再add区域，直接删除这个blob，同时从add区域删除
-    2. 如果这个文件再curCommit中，需要删除对这个文件的追踪，但是不能删除blob，因为可能这个blob是共享的
-     */
+        1. If the file is saved in the add area, delete the blob directly and delete it from the add area
+        2. If the file is in curCommit, you need to delete the tracking of the file, but you can't delete the blob, because the blob may be shared
+         */
     public static void rm(String fileName) {
         restoreState();
 
@@ -154,9 +152,9 @@ public class Repository {
     }
 
     /*
-     * 1.首先是从下往上
-     * 2.只展示第一个parents，
-     * 3.对于merge，记得展示merge的两个id
+     * 1. First of all, from the bottom up
+     * 2.Show only the first parent,
+     *3. For Merge, remember to show the two IDs of Merge
      * */
     public static void log() {
         curCommit = getCurCommit();
@@ -165,14 +163,14 @@ public class Repository {
 
     public static void globalLog() {
         List<Commit> commits = getAllCommit();
-        for(Commit i : commits) {
+        for (Commit i : commits) {
             printCommit(i);
         }
     }
 
     public static void find(String message) {
         List<Commit> commits = getAllCommit();
-        for(Commit i : commits) {
+        for (Commit i : commits) {
             if (i.getMessage().equals(message)) {
                 System.out.println(i.getId());
             }
@@ -187,16 +185,15 @@ public class Repository {
     }
 
     /*
-     * 该方法需要将curCommit的file放到工作区，
-     * 但是不添加到addStage
+     * This method needs to put the file of curCommit into the workspace,
+     * However, it is not added to addStage
      */
     public static void checkOutOnCurCommit(String fileName) {
         curCommit = getCurCommit();
         checkOut(curCommit, fileName);
     }
 
-
-    /*将当给定分支名id,将这个commit内的file添加到工作区，同时需要不需要添加到addStage*/
+    /* will add the file in this commit to the workspace when the branch name id is given, and it needs to be added to addStage*/
     public static void CheckOutFromOtherCommit(String commitId, String fileName) {
         List<Commit> all = getAllCommit();
         for (Commit i : all) {
@@ -208,9 +205,9 @@ public class Repository {
         System.out.println("No commit with that id exists.");
     }
 
-    /*切换到branchName，同时将head文件内的当前分支设置这个
-    * 同时还需要将当前分支内追踪的文件但是在checkout分支没有追踪的文件删除
-    * 最后清除stage，如果当前分支和checkout分支是用一个就不用清除*/
+    /* Switch to branchName, and set the current branch in the head file to this
+     * It is also necessary to delete the files that are tracked in the current branch but are not tracked in the checkout branch
+     * Clear stage last, don't clear if the current branch and checkout branch are one*/
     public static void checkOutFromBranch(String branchName) {
         checkBranchNameExist(branchName);
         checkBranchIsCurCommit(branchName);
@@ -222,7 +219,7 @@ public class Repository {
         changeBranch(branchName);
     }
 
-    /*创建一个分支，然后指向当前的commit,但是不会切换到这个分支上*/
+    /* creates a branch and points to the current commit, but does not switch to that branch */
     public static void addNewBranch(String newBranch) {
         List<String> branches = getAllBranches();
         if (branches.contains(newBranch)) {
@@ -244,21 +241,22 @@ public class Repository {
         List<String> branches = getAllBranches();
         curBranch = getCurBranch();
 
-        if(curBranch.equals(branchName)) {
+        if (curBranch.equals(branchName)) {
             exit("Cannot remove the current branch.");
         }
 
         if (branches.contains(branchName)) {
             File file = Utils.join(HEADS, branchName);
             Utils.restrictedDelete(file);
-        } else{
+        } else {
             exit("A branch with that name does not exist.");
         }
     }
-    /*和checkout切换到某个分支是差不多的
-    * 1.先判断commitId是否存在
-    * 2.然后切换到该commit，在checkout中已经实现过了
-    * 3.然后将当前branch的commitId设置为这个id*/
+
+    /* is pretty much the same as switching to a branch with checkout
+     * 1.Check whether the commitId exists
+     *2. Then switch to that commit, which has already been implemented in checkout
+     *3. Then set the commitId of the current branch to this id */
     public static void reset(String commitId) {
         checkCommitExits(commitId);
         curCommit = getCurCommit();

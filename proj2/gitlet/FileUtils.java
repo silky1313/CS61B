@@ -25,7 +25,7 @@ public class FileUtils {
         deleteFile.deleteOnExit();
     }
 
-    /*以file作为前缀的所有文件*/
+    /*All files prefixed with file*/
     public static void deleteFiles(List<String>fileNames, File prefix) {
         for (String i : fileNames) {
             File file = join(prefix, i);

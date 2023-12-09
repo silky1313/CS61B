@@ -1,8 +1,5 @@
 package gitlet;
 
-
-import org.checkerframework.checker.units.qual.C;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -60,7 +57,6 @@ public class RepositoryUtils {
         Map<String, String> newCommitBlobs = new HashMap<>();
         List<String> newCommitParents = new ArrayList<>();
 
-        //需要对这三个map进行合并，并用一个新的map存储。
         for (String filePath : curCommitBlobs.keySet()) {
             newCommitBlobs.put(filePath, curCommitBlobs.get(filePath));
         }
@@ -71,16 +67,13 @@ public class RepositoryUtils {
             newCommitBlobs.remove(filePath);
         }
 
-        //再获取他的parents
         newCommitParents.add(curCommit.getId());
 
-        //然后就是创建新的commit
         Commit newCommit = new Commit(message, newCommitBlobs, newCommitParents);
         newCommit.save();
         String nowBranch = getCurBranch();
         writeBranchHead(nowBranch, newCommit.getId());
 
-        //最后记得清除缓存区
         clearStage();
     }
 
@@ -228,7 +221,7 @@ public class RepositoryUtils {
         return readObject(commitFile, Commit.class);
     }
 
-    /*从curCommit切换到newCommit*/
+    /*Switch from cur commit to new commit*/
     public static void changeCommit(Commit newCommit) {
         List<String> onlyCurCommitTracked = findOnlyCurCommitTracked(newCommit);
         List<String> bothCommitTracked = findBothCommitTracked(newCommit);
@@ -243,7 +236,7 @@ public class RepositoryUtils {
         writeContents(HEAD, branchName);
     }
 
-    /*找到仅在curCommit中跟踪的文件*/
+    /*Find files that are only tracked in cur commit*/
     public static List<String> findOnlyCurCommitTracked(Commit newCommit) {
         List<String> curFileName = curCommit.getFileNames();
         List<String> newFileName = newCommit.getFileNames();
@@ -255,7 +248,7 @@ public class RepositoryUtils {
         return curFileName;
     }
 
-    /*找到在两个commit的共同追踪的文件*/
+    /*Find the files that are tracked in both commits*/
     public static List<String> findBothCommitTracked(Commit newCommit) {
         List<String> curFileName = curCommit.getFileNames();
         List<String> newFileName = newCommit.getFileNames();
@@ -281,7 +274,7 @@ public class RepositoryUtils {
         return newFileName;
     }
 
-    /*需要将newCommit中文件覆盖oldFile中所有文件*/
+    /*Need to overwrite all files in old File with new Commit Chinese */
     public static void overwriteFiles(List<String>oldFileNames, Commit newCommit) {
         for (String i : oldFileNames) {
             Blob blob =  newCommit.getBlobByFileName(i);
