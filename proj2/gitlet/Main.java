@@ -1,11 +1,9 @@
 package gitlet;
 
-import java.io.IOException;
-
 import static gitlet.RepositoryUtils.exit;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         if (args.length == 0) {
             exit("Please enter a command.");
         }

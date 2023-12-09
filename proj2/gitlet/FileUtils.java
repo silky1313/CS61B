@@ -10,15 +10,25 @@ import static gitlet.Utils.join;
 
 public class FileUtils {
 
-    public static File createFile(File file) throws IOException {
-        Path path = Path.of(file.getPath());
-        Files.createDirectories(path.getParent());
-        return Files.createFile(path).toFile();
+    public static File createFile(File file) {
+        try{
+            Path path = Path.of(file.getPath());
+            Files.createDirectories(path.getParent());
+            return Files.createFile(path).toFile();
+        }
+         catch(IOException i) {
+
+         }
+        return null;
     }
 
-    public static File createDir(File file) throws IOException {
-        Path path = Path.of(file.getPath());
-        return Files.createDirectories(path).toFile();
+    public static File createDir(File file) {
+        try {
+            Path path = Path.of(file.getPath());
+            return Files.createDirectories(path).toFile();
+        } catch (IOException i) {
+        }
+        return null;
     }
 
     public static void deleteFile(File deleteFile) {

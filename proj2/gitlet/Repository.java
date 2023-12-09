@@ -57,7 +57,7 @@ public class Repository {
     public static String curBranch;
 
     /* TODO: fill in the rest of this class. */
-    public static void init() throws IOException {
+    public static void init() {
         if (GITLET_DIR.exists()) {
             exit("A Gitlet version-control system already exists in the current directory.");
         }
