@@ -2,7 +2,9 @@ package gitlet;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static gitlet.FileUtils.*;
 import static gitlet.RepositoryUtils.*;
@@ -137,12 +139,13 @@ public class Repository {
         restoreState();
 
         File file = join(CWD, fileName);
-        Blob blob = new Blob(file);
+        String filePath = file.getPath();
 
-        if (addStage.valueExist(blob.getId())) {
-            addStage.delete(blob);
+        if (addStage.keyExist(filePath)) {
+            addStage.delete(filePath);
             saveAddStage();
-        } else if (curCommit.keyExist(blob.getPath())) {
+        } else if (curCommit.keyExist(filePath)) {
+            Blob blob = getBlobFromCurrCommitByPath(filePath, curCommit);
             removeStage.add(blob);
             deleteFile(blob.getFileName());
             saveRemoveStage();
@@ -235,6 +238,7 @@ public class Repository {
         removeStage = getRemoveStage();
         addStage = getAddStage();
         curCommit = getCurCommit();
+        curBranch = getCurBranch();
     }
 
     public static void removeBranch(String branchName) {
@@ -247,7 +251,7 @@ public class Repository {
 
         if (branches.contains(branchName)) {
             File file = Utils.join(HEADS, branchName);
-            Utils.restrictedDelete(file);
+            FileUtils.deleteFile(file);
         } else {
             exit("A branch with that name does not exist.");
         }
@@ -266,5 +270,30 @@ public class Repository {
 
         changeCommit(commit);
         changeBranchHead(commitId);
+    }
+
+    public static void merge(String mergeBranch) {
+        restoreState();
+        checkIfStageEmpty();
+        checkIfBranchExists(mergeBranch);
+        checkIfBranchIsCurBranch(mergeBranch);
+
+        Commit mergeCommit = getCommitByBranchName(mergeBranch);
+        Commit splitPoint = findSplitPoint(curCommit, mergeCommit);
+        checkIfSplitPintIsGivenBranch(splitPoint, mergeCommit);
+        checkIfSplitPintIsCurrBranch(splitPoint, mergeBranch);
+
+        Map<String, String> currCommitBlobs = curCommit.getBlobs();
+        String message = "Merged " + mergeBranch + " into " + curBranch + ".";
+        String currBranchCommitID = getCommitByBranchName(curBranch).getId();
+        String mergeBranchCommitID = getCommitByBranchName(mergeBranch).getId();
+        List<String> parents = new ArrayList<>(List.of(currBranchCommitID, mergeBranchCommitID));
+        Commit newCommit = new Commit(message, currCommitBlobs, parents);
+
+        Commit mergedCommit = mergeFilesToNewCommit(splitPoint, newCommit, mergeCommit);
+
+        mergedCommit.save();
+        clearStage();
+        writeBranchHead(curBranch, mergedCommit.getId());
     }
 }

@@ -94,6 +94,11 @@ public class Main {
                 gitletExits();
                 Repository.reset(args[1]);
                 break;
+            case "merge":
+                check(args, 2);
+                gitletExits();
+                Repository.merge(args[1]);
+                break;
             default:
                 exit("No command with that name exists.");
         }

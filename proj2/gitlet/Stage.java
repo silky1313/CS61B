@@ -38,6 +38,10 @@ public class Stage implements Serializable {
         blobs.remove(blob.getPath());
     }
 
+    public void delete(String path) {
+        blobs.remove(path);
+    }
+
     public static void saveAddStage() {
         Utils.writeObject(ADDSTAGE, addStage);
     }
