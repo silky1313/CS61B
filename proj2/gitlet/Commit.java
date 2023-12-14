@@ -126,8 +126,7 @@ public class Commit implements Serializable {
     }
 
     public List<String> getBlobIdList(){
-        List<String> list = new ArrayList<>(blobs.values());
-        return list;
+        return new ArrayList<>(blobs.values());
     }
 
     public boolean keyExist(String key) {

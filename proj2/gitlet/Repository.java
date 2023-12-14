@@ -1,7 +1,6 @@
 package gitlet;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -173,10 +172,15 @@ public class Repository {
 
     public static void find(String message) {
         List<Commit> commits = getAllCommit();
+        boolean flag = false;
         for (Commit i : commits) {
             if (i.getMessage().equals(message)) {
                 System.out.println(i.getId());
+                flag = true;
             }
+        }
+        if (!flag) {
+            System.out.println("Found no commit with that message.");
         }
     }
 

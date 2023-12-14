@@ -288,6 +288,10 @@ public class RepositoryUtils {
 
     /**/
     private static void writeFiles(List<String> onlyNewCommitTracked, Commit newCommit) {
+        if(onlyNewCommitTracked.isEmpty()) {
+            return;
+        }
+
         for (String fileName : onlyNewCommitTracked) {
             File file = join(CWD, fileName);
             if (file.exists()) {
@@ -411,6 +415,7 @@ public class RepositoryUtils {
 
     private static List<String> caculateAllFiles(Commit splitPoint, Commit newCommit, Commit mergeCommit) {
         List<String> allFiles = new ArrayList<>(splitPoint.getBlobIdList());
+
         allFiles.addAll(newCommit.getBlobIdList());
         allFiles.addAll(mergeCommit.getBlobIdList());
         Set<String> set = new HashSet<>(allFiles);
@@ -421,10 +426,12 @@ public class RepositoryUtils {
 
     private static List<String> caculateOverwriteFiles(List<String> allFiles, Commit splitPoint, Commit
             newCommit, Commit mergeCommit) {
+
         Map<String, String> splitPointMap = splitPoint.getBlobs();
         Map<String, String> newCommitMap = newCommit.getBlobs();
         Map<String, String> mergeCommitMap = mergeCommit.getBlobs();
         List<String> overwriteFiles = new ArrayList<>();
+
         for (String path : splitPointMap.keySet()) {
             if (newCommitMap.containsKey(path) && mergeCommitMap.containsKey(path)) {
                 if ((splitPointMap.get(path).equals(newCommitMap.get(path))) && (!splitPointMap.get(path).equals(mergeCommitMap.get(path)))) {
