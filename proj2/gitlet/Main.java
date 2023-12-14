@@ -1,118 +1,173 @@
 package gitlet;
 
-import static gitlet.RepositoryUtils.exit;
-
 public class Main {
-    public static void main(String[] args){
+
+    /**
+     * Usage: java gitlet.Main ARGS, where ARGS contains
+     * <COMMAND> <OPERAND1> <OPERAND2> ...
+     */
+    public static void main(String[] args) {
+        // TODO: what if args is empty?
         if (args.length == 0) {
-            exit("Please enter a command.");
+            System.out.println("Please enter a command.");
+            System.exit(0);
         }
         String firstArg = args[0];
         switch (firstArg) {
+
+            /* * init command */
             case "init":
-                check(args, 1);
+                // TODO: handle the `init` command
+                validArgs(args, 1);
+
                 Repository.init();
                 break;
 
+            /* * add command */
             case "add":
-                check(args, 2);
-                gitletExits();
+                // TODO: handle the `add [filename]` command
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
                 Repository.add(args[1]);
                 break;
+            // TODO: FILL THE REST IN
 
+            /* * commit command */
             case "commit":
-                check(args, 2);
-                gitletExits();
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
                 Repository.commit(args[1]);
                 break;
 
+            /* * rm command */
             case "rm":
-                check(args, 2);
-                gitletExits();
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
                 Repository.rm(args[1]);
                 break;
 
+            /* * log command */
             case "log":
-                check(args, 1);
-                gitletExits();
+                validArgs(args, 1);
+
+                Repository.checkIfInitialized();
+
                 Repository.log();
                 break;
 
+            /* * global-log command */
             case "global-log":
-                check(args, 1);
-                gitletExits();
-                Repository.globalLog();
+                validArgs(args, 1);
+
+                Repository.checkIfInitialized();
+
+                Repository.global_log();
                 break;
 
+            /* * find command */
             case "find":
-                check(args, 2);
-                gitletExits();
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
                 Repository.find(args[1]);
                 break;
 
+            /* * status command */
             case "status":
-                check(args, 1);
-                gitletExits();
+                validArgs(args, 1);
+
+                Repository.checkIfInitialized();
+
                 Repository.status();
                 break;
 
+            /* * status command */
             case "checkout":
-                gitletExits();
-                /*checkout -- [file name]*/
-                /*checkout [commit id] -- [file name]*/
-                /*checkout [branch name]*/
+
+                Repository.checkIfInitialized();
+
                 switch (args.length) {
                     case 3:
-                        if (!args[1].equals("--")){
-                            exit("Incorrect operands.");
+                        if (!args[1].equals("--")) {
+                            System.out.println("Incorrect operands.");
+                            System.exit(0);
                         }
-                        Repository.checkOutOnCurCommit(args[2]);
+                        /* * checkout -- [file name] */
+                        Repository.checkout(args[2]);
                         break;
+
                     case 4:
                         if (!args[2].equals("--")) {
-                            exit("Incorrect operands.");
+                            System.out.println("Incorrect operands.");
+                            System.exit(0);
                         }
-                        Repository.CheckOutFromOtherCommit(args[1], args[3]);
+                        /* * checkout [commit id] -- [file name] */
+                        Repository.checkout(args[1], args[3]);
                         break;
+
                     case 2:
-                        Repository.checkOutFromBranch(args[1]);
+                        /* * checkout [branch name] */
+                        Repository.checkoutBranch(args[1]);
                         break;
+
+                    default:
+                        System.out.println("Incorrect operands.");
+                        System.exit(0);
                 }
                 break;
+
+            /* * branch command */
             case "branch":
-                check(args, 2);
-                gitletExits();
-                Repository.addNewBranch(args[1]);
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
+                Repository.branch(args[1]);
                 break;
+
+            /* * rm-branch command */
             case "rm-branch":
-                check(args, 2);
-                gitletExits();
-                Repository.removeBranch(args[1]);
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
+                Repository.rm_branch(args[1]);
                 break;
+
+            /* * reset command */
             case "reset":
-                check(args, 2);
-                gitletExits();
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
+
                 Repository.reset(args[1]);
                 break;
+
+            /* * merge command */
             case "merge":
-                check(args, 2);
-                gitletExits();
+                validArgs(args, 2);
+
+                Repository.checkIfInitialized();
                 Repository.merge(args[1]);
                 break;
+
             default:
-                exit("No command with that name exists.");
+                System.out.println("No command with that name exists.");
+                System.exit(0);
         }
     }
 
-    public static void check(String[] args, int length) {
-        if (args.length != length) {
-            exit("Incorrect operands.");
-        }
-    }
-
-    public static void gitletExits() {
-        if (!Repository.GITLET_DIR.exists()) {
-            exit("Not in an initialized Gitlet directory.");
+    private static void validArgs(String[] args, int num) {
+        if (args.length != num) {
+            System.out.println("Incorrect operands.");
+            System.exit(0);
         }
     }
 }

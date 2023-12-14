@@ -2,21 +2,26 @@ package gitlet;
 
 import java.io.File;
 import java.io.Serializable;
-import java.nio.charset.StandardCharsets;
 
-import static gitlet.Repository.OBJECTS;
+import static gitlet.Repository.OBJECT_DIR;
+import static gitlet.Utils.*;
 
 public class Blob implements Serializable {
-    private final String id;
+    /**
+     * hashI
+     */
+    private String id;
 
-    private final byte[] bytes;
+    /**
+     * content
+     */
+    private byte[] bytes;
 
-    private final File fileName;
+    private File fileName;
 
-    private final String filePath;
+    private String filePath;
 
-    private final File blobSaveFileName;
-
+    private File blobSaveFileName;
 
     public Blob(File fileName) {
         this.fileName = fileName;
@@ -26,7 +31,7 @@ public class Blob implements Serializable {
         this.blobSaveFileName = generateBlobSaveFileName();
     }
 
-    public String getId() {
+    public String getBlobID() {
         return id;
     }
 
@@ -42,34 +47,25 @@ public class Blob implements Serializable {
         return blobSaveFileName;
     }
 
-    public File getFileName(){
-        return fileName;
+    public String getFileName(){
+        return fileName.getName();
     }
 
     private byte[] readFile() {
-        return Utils.readContents(fileName);
+        return readContents(fileName);
     }
 
     private String generateID() {
-        return Utils.sha1(filePath, bytes);
+        return sha1(filePath, bytes);
     }
 
 
     private File generateBlobSaveFileName() {
-        return Utils.join(OBJECTS, id);
+        return join(OBJECT_DIR, id);
     }
 
-    /*
-     * save blob into objects
-     */
     public void save() {
-        Utils.writeObject(blobSaveFileName, this);
+        writeObject(blobSaveFileName, this);
     }
 
-    /*
-     *  get blob from object then store into cwd;
-     */
-    public void reSave() {
-        Utils.writeContents(getFileName(), new String(bytes, StandardCharsets.UTF_8));
-    }
 }
