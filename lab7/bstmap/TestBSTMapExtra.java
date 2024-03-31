@@ -93,11 +93,15 @@ public class TestBSTMapExtra {
         for (int i = 0; i < 10; i++) {
             rightChild.put((char) ('C'+i), 3+i);
         }
+
+
+
         rightChild.put('A', 100);
         assertTrue(((Integer) rightChild.remove('D')).equals(new Integer(4)));
         assertTrue(((Integer) rightChild.remove('G')).equals(new Integer(7)));
         assertTrue(((Integer) rightChild.remove('A')).equals(new Integer(100)));
-        assertTrue(rightChild.size()==9);
+        rightChild.printInOrder();
+        assertTrue(rightChild.size() == 9);
 
         BSTMap leftChild = new BSTMap();
         leftChild.put('B', 1);
