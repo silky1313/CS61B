@@ -33,6 +33,3 @@
 - project1:主要是实现基于链表和基于数组实现双端队列，然后使用 [Karplus-Strong algorithm](http://en.wikipedia.org/wiki/Karplus–Strong_string_synthesis)算法来对吉他琴弦声音进行模拟，这个部分已经实现好了。
 - project2:主要是实现了已给mini  git，但是功能还比较受限。比较难的点主要是设计git的文件系统和实现git merge操作。
 - project3：暂未完成。
-
-
-
